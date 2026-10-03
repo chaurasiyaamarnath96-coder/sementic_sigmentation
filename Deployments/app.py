@@ -3,6 +3,7 @@ import torch
 import numpy as np
 import cv2
 import av
+import os
 
 from PIL import Image
 from streamlit_webrtc import (
@@ -55,12 +56,20 @@ def load_model():
 
     model = UNet()
 
-    model.load_state_dict(
-        torch.load(
-            "best_unet_camvid.pth",
-            map_location=device
-        )
+    import os
+
+    MODEL_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "best_unet_camvid.pth"
     )
+
+    model.load_state_dict(
+    torch.load(
+        MODEL_PATH,
+        map_location=device
+    )
+)
+    
 
     model.to(device)
     model.eval()
